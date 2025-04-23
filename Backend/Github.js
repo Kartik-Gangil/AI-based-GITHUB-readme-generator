@@ -32,7 +32,7 @@ async function getRepoInfo(url) {
         });
         // console.log(response.data);
         const content = Buffer.from(response.data.content, 'base64').toString('utf8');
-        console.log(content);
+        return { content, repo };
     } catch (error) {
         console.error("Error fetching repo info:", error.message);
     }
