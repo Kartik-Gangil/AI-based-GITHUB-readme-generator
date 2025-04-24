@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE) <!-- Replace LICENSE with your actual license file -->
 
-[![Watch the demo]([[https://img.youtube.com/vi/5DqURdUv-4I&t=1s/hqdefault.jpg](https://i9.ytimg.com/vi_webp/5DqURdUv-4I/mqdefault.webp?v=680a68c6&sqp=COjgqcAG&rs=AOn4CLDIlNtvwAyFjpFqQYPXTL0zZsFsJw)])](https://www.youtube.com/watch?v=5DqURdUv-4I&t=1s)
+[![Watch the demo](https://img.youtube.com/vi/5DqURdUv-4I&t=1s/hqdefault.jpg](https://i9.ytimg.com/vi_webp/5DqURdUv-4I/mqdefault.webp?v=680a68c6&sqp=COjgqcAG&rs=AOn4CLDIlNtvwAyFjpFqQYPXTL0zZsFsJw)])](https://www.youtube.com/watch?v=5DqURdUv-4I&t=1s)
 
 
 ## Table of Contents
