@@ -9,10 +9,6 @@ function App() {
 
 
 
-  useEffect(() => {
-    localStorage.removeItem('repo')
-  })
-
   const handelGenerate = async () => {
     setLoader(true)
     const response = await axios.post('http://localhost:8000/', {
