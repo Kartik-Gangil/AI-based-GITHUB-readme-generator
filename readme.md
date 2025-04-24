@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE) <!-- Replace LICENSE with your actual license file -->
 
-[![Watch the demo](https://img.youtube.com/vi/5DqURdUv-4I&t=1s/hqdefault.jpg)](https://www.youtube.com/watch?v=5DqURdUv-4I&t=1s)
+[![Watch the demo](https://img.youtube.com/vi/5DqURdUv-4I/hqdefault.jpg)](https://www.youtube.com/watch?v=5DqURdUv-4I&t=1s)
 
 
 ## Table of Contents
