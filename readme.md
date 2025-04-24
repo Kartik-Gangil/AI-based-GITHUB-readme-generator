@@ -128,5 +128,5 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Kartik Gupta - [kartikgupta666@gmail.com](mailto:kartikgupta666@gmail.com)
+Kartik Gupta - [kartikgangil@gmail.com](mailto:kartikgangil@gmail.com)
 ```
