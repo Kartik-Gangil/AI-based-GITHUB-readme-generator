@@ -41,7 +41,7 @@ const Files = {
 }
 
 
-
+//  fetch the highest contribute language from the git repositry
 async function getRepoLanguageList(url) {
     try {
         const { owner, repo } = parseURL(url);
@@ -59,12 +59,12 @@ async function getRepoLanguageList(url) {
     }
 }
 
-
-async function getRepoContent(url, path) {
+// this function fetch the content from the git repositry file
+async function getRepoContent(url, paths) {
     try {
         const { owner, repo } = parseURL(url);
-        let data = "";
-        
+        let Content = "";
+        for (const path of paths) {
             const response = await oK.repos.getContent({
                 owner,
                 repo,
@@ -72,10 +72,12 @@ async function getRepoContent(url, path) {
             })
 
             const content = Buffer.from(response.data.content, 'base64').toString('utf8');
-            data += `project name: ${repo} \n`;
-            data += "\n\n\n----------------------- another file--------------------------------- \n\n\n";
-            data += content;
-            return data;
+            Content += `project name: ${repo} \n`;
+            Content += "\n\n\n----------------------- another file--------------------------------- \n\n\n";
+            Content += content;
+        }
+        // console.log(Content)
+        return { Content, repo };
     } catch (error) {
         console.error("Error fetching repo info:", error.message);
     }
@@ -84,14 +86,10 @@ async function getRepoContent(url, path) {
 
 
 
-
-
-module.exports = getRepoLanguageList;
-
-
-
+//  this fuunction fetch the file structure from the git repositry
 async function getRepoFileStructure(url) {
     try {
+        let Path = [];
         const Language = await getRepoLanguageList(url)
         const { owner, repo } = parseURL(url);
         // Step 1: Get the SHA of the latest commit on the branch
@@ -124,24 +122,32 @@ async function getRepoFileStructure(url) {
         treeData.data.tree.forEach(item => {
             if (item.type === 'blob') {
                 const base = path.basename(item.path);
-
                 // Normalize the language key (e.g., "javascript" → "Javascript")
                 const normalizedLang = Object.keys(Files).find(
                     key => key.toLowerCase() === Language.toLowerCase()
                 );
-
                 if (normalizedLang && Files[normalizedLang].includes(base)) {
-                    getRepoContent(url , item.path)
+                    Path.push(item.path)
                 }
             }
         });
+        console.log(Path)
+        const { Content } = await getRepoContent(url, Path)
+        return { Content, repo };
     } catch (error) {
         console.error("Error fetching file structure:", error.message);
     }
 }
-async function run() {
-    await getRepoFileStructure("https://github.com/Kartikgupta666/expense-traker-app.git");
 
-}
 
-run()
+// async function run() {
+//     await getRepoFileStructure("https://github.com/Kartikgupta666/AI-based-GITHUB-readme-generator.git");
+
+// }
+
+// run()
+
+
+
+
+module.exports = getRepoFileStructure;

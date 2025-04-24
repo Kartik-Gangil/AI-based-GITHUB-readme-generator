@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const getRepoLanguageList = require('./Github');
+const getRepoFileStructure = require('./Github');
 const main = require('./Gemini');
 const fs = require('fs');
 const path = require('path');
@@ -24,7 +24,7 @@ function appendContent(CONTENT) {
 
 async function Generate_Readme(url) {
     try {
-        const { Content, repo } = await getRepoLanguageList(url)
+        const { Content, repo } = await getRepoFileStructure(url)
         const FullContent = appendContent(Content);
         const data = await main(FullContent); // resolve the Promise
 
