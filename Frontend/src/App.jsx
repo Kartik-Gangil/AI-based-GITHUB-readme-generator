@@ -1,9 +1,11 @@
 import './App.css'
 import { IoCloudDownloadOutline } from "react-icons/io5"
 import axios from "axios"
+import Loader from './Components/Loader'
 import { useEffect, useState } from 'react'
 function App() {
   const [url, setUrl] = useState('')
+  const [loader, setLoader] = useState(false)
 
 
 
@@ -12,14 +14,17 @@ function App() {
   })
 
   const handelGenerate = async () => {
+    setLoader(true)
     const response = await axios.post('http://localhost:8000/', {
       url: url
     })
     if (response.status === 200) {
       console.log(response.data)
       localStorage.setItem('repo', response.data.repo)
+      setLoader(false)
     } else {
       console.error('Error generating readme:', response.data)
+      setLoader(false)
     }
   }
 
@@ -52,7 +57,12 @@ function App() {
 
         <button className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer' onClick={handelGenerate}>Generate</button>
       </div>
-      <button onClick={handelDownload} className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>
+      {loader &&
+        <Loader />}
+      {
+        localStorage.getItem('repo') &&
+        <button onClick={handelDownload} className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>
+      }
     </div>
   )
 }
