@@ -19,7 +19,7 @@ function App() {
       url: url
     })
     if (response.status === 200) {
-      console.log(response.data)
+      alert(response.data.message)
       localStorage.setItem('repo', response.data.repo)
       setLoader(false)
     } else {
@@ -50,18 +50,19 @@ function App() {
 
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-500 to-50%'>
+      <h1 className='text-5xl mt-5 font-bold'>AI ReadMe Generator</h1>
       <div className='flex justify-center-safe align-center my-10 gap-2'>
         <input type="text" placeholder='Past your github repo link' className='px-3 py-2 border-1 outline-offset-0 outline-blue-500 focus:outline-2 focus:border-0 rounded-md
         w-96' value={url} onChange={e => setUrl(e.target.value)} />
 
         <button className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer' onClick={handelGenerate}>Generate</button>
       </div>
-      {loader &&
+      { loader && 
         <Loader />}
       {
         localStorage.getItem('repo') &&
-        <button onClick={handelDownload} className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>
+        <button onClick={handelDownload} className='mt-6 px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>
       }
     </div>
   )
