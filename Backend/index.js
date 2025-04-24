@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const getRepoInfo = require('./Github');
+const getRepoLanguageList = require('./Github');
 const main = require('./Gemini');
 const fs = require('fs');
 const path = require('path');
@@ -24,27 +24,27 @@ function appendContent(CONTENT) {
 
 async function Generate_Readme(url) {
     try {
-        const { content, repo } = await getRepoInfo(url)
-        const FullContent = appendContent(content);
+        const { Content, repo } = await getRepoLanguageList(url)
+        const FullContent = appendContent(Content);
         const data = await main(FullContent); // resolve the Promise
 
-        let Content = data.split('```markdown')[1]
+        let content = data.split('```markdown')[1]
         const outputDir = path.join(__dirname, 'output');
         if (!fs.existsSync(outputDir)) {
             fs.mkdirSync(outputDir);
         }
         const filePath = path.join(outputDir, `${repo}.md`);
-        fs.writeFileSync(filePath, Content);
+        fs.writeFileSync(filePath, content);
 
         console.log('File written successfully');
-        res.status(200).json({message:'file written succesfully' , repo})
+        // res.status(200).json({message:'file written succesfully' , repo})
     } catch (err) {
         console.error('Error writing file:', err);
     }
 }
 
 
-app.get('/', async (req, res) => {
+app.post('/', async (req, res) => {
     const { url } = req.body;
     if (!url) {
         return res.status(400).json({ error: 'URL is required' });

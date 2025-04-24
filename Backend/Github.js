@@ -1,5 +1,5 @@
 const { Octokit } = require('@octokit/rest')
-
+const path = require('path')
 const oK = new Octokit({
     auth: process.env.GITHUB_TOKEN,
     userAgent: 'octokit/rest.js v1.2.3',
@@ -22,19 +22,126 @@ function parseURL(url) {
 
 
 
-async function getRepoInfo(url) {
+
+const Files = {
+    "Javascript": ["package.json", "index.js", "app.js", "server.js", "main.js", ".babelrc", ".eslintrc"],
+    "Typescript": ["index.ts", "main.ts", "app.ts", "tsconfig.json", "package.json"],
+    "Python": ["script.py", "requirements.txt", "project.toml", "app.py", "main.py", "server.py", "pipfile"],
+    "Java": ["Main.java", "App.javapom", ".xml(Maven)", "build.gradle(Gradle)", "pom.xml"],
+    "C++": ["main.cpp", "app.cpp", "program.cpp", "CMakeLists.txt", "Makefile"],
+    "C": ["main.c", "program.c", "Makefile"],
+    "Go": ["main.go", "app.go", "go.mod", "go.sum"],
+    "Ruby": ["main.rb", "app.rb", "Gemfile", "Rakefile"],
+    "PHP": ["index.php", "app.php", "composer.json"],
+    "Rust": ["main.rs", "lib.rs", "Cargo.toml"],
+    "Kotlin": ["Main.kt", "App.kt", "build.gradle.kts", "settings.gradle.kts"],
+    "Swift": ["main.swift", "App.swift", "Package.swift", ".xcodeproj", ".xcworkspace"],
+    "R": ["main.R", "app.R", "DESCRIPTION"]
+
+}
+
+
+
+async function getRepoLanguageList(url) {
     try {
         const { owner, repo } = parseURL(url);
-        const response = await oK.repos.getContent({
+        const response = await oK.repos.listLanguages({
             owner,
             repo,
-            path: "package.json",
         });
-        // console.log(response.data);
-        const content = Buffer.from(response.data.content, 'base64').toString('utf8');
-        return { content, repo };
+
+        const content = response.data;
+        const Language = Object.keys(content).reduce((a, b) => content[a] > content[b] ? a : b);
+
+        return Language;
     } catch (error) {
         console.error("Error fetching repo info:", error.message);
     }
 }
-module.exports = getRepoInfo;
+
+
+async function getRepoContent(url, path) {
+    try {
+        const { owner, repo } = parseURL(url);
+        let data = "";
+        
+            const response = await oK.repos.getContent({
+                owner,
+                repo,
+                path: path
+            })
+
+            const content = Buffer.from(response.data.content, 'base64').toString('utf8');
+            data += `project name: ${repo} \n`;
+            data += "\n\n\n----------------------- another file--------------------------------- \n\n\n";
+            data += content;
+            return data;
+    } catch (error) {
+        console.error("Error fetching repo info:", error.message);
+    }
+}
+
+
+
+
+
+
+module.exports = getRepoLanguageList;
+
+
+
+async function getRepoFileStructure(url) {
+    try {
+        const Language = await getRepoLanguageList(url)
+        const { owner, repo } = parseURL(url);
+        // Step 1: Get the SHA of the latest commit on the branch
+        const refData = await oK.git.getRef({
+            owner,
+            repo,
+            ref: `heads/main`
+        });
+
+        const commitSha = refData.data.object.sha;
+
+        // Step 2: Get the tree SHA from the commit
+        const commitData = await oK.git.getCommit({
+            owner,
+            repo,
+            commit_sha: commitSha
+        });
+
+        const treeSha = commitData.data.tree.sha;
+
+        // Step 3: Get the full recursive tree
+        const treeData = await oK.git.getTree({
+            owner,
+            repo,
+            tree_sha: treeSha,
+            recursive: "1"
+        });
+
+        // Output file paths
+        treeData.data.tree.forEach(item => {
+            if (item.type === 'blob') {
+                const base = path.basename(item.path);
+
+                // Normalize the language key (e.g., "javascript" → "Javascript")
+                const normalizedLang = Object.keys(Files).find(
+                    key => key.toLowerCase() === Language.toLowerCase()
+                );
+
+                if (normalizedLang && Files[normalizedLang].includes(base)) {
+                    getRepoContent(url , item.path)
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching file structure:", error.message);
+    }
+}
+async function run() {
+    await getRepoFileStructure("https://github.com/Kartikgupta666/expense-traker-app.git");
+
+}
+
+run()
