@@ -1,4 +1,4 @@
-const { Octokit } = await import('@octokit/rest')
+const { Octokit } = require('@octokit/rest')
 const path = require('path')
 const oK = new Octokit({
     auth: process.env.GITHUB_TOKEN,
