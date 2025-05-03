@@ -24,7 +24,7 @@ function parseURL(url) {
 
 
 const Files = {
-    "Javascript": ["package.json", "index.js", "app.js", "server.js", "main.js", ".babelrc", ".eslintrc"],
+    "Javascript": ["package.json", "index.js", "app.js", "server.js", "main.js", ".babelrc", ".eslintrc" , ".env-sample"],
     "Typescript": ["index.ts", "main.ts", "app.ts", "tsconfig.json", "package.json"],
     "Python": ["script.py", "requirements.txt", "project.toml", "app.py", "main.py", "server.py", "pipfile"],
     "Java": ["Main.java", "App.javapom", ".xml(Maven)", "build.gradle(Gradle)", "pom.xml"],
