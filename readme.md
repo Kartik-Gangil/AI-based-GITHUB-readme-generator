@@ -2,10 +2,17 @@
 # AI-based-GITHUB-readme-generator
 
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE) <!-- Replace LICENSE with your actual license file -->
+## Planning Video
+[![Watch the Planning](https://img.youtube.com/vi/_DnBzebVUaY&t=5s/hqdefault.jpg)](https://www.youtube.com/watch?v=_DnBzebVUaY&t=5s)
+
+
+## Demo Video
+[![Watch the demo](https://img.youtube.com/vi/5DqURdUv-4I/hqdefault.jpg)](https://www.youtube.com/watch?v=5DqURdUv-4I&t=1s)
+
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
+- [Project Overview](#project-overview)    
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Backend Setup](#backend-setup)
@@ -121,5 +128,5 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Kartik Gupta - [kartikgupta666@gmail.com](mailto:kartikgupta666@gmail.com)
+Kartik Gupta - [kartikgangil@gmail.com](mailto:kartikgangil@gmail.com)
 ```
