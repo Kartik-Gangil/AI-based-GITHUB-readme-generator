@@ -1,5 +1,6 @@
-const { Octokit } = require('@octokit/rest')
-const path = require('path')
+import { Octokit } from '@octokit/rest'
+import path from 'path'
+
 const oK = new Octokit({
     auth: process.env.GITHUB_TOKEN,
     userAgent: 'octokit/rest.js v1.2.3',
@@ -150,4 +151,4 @@ async function getRepoFileStructure(url) {
 
 
 
-module.exports = getRepoFileStructure;
+export default getRepoFileStructure;

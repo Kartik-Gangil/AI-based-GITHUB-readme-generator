@@ -1,4 +1,4 @@
-const ErrorHandler = require('../utils/ErrorHandler');
+// const ErrorHandler = require('../utils/ErrorHandler');
 const isAuthenticated = (req, res, next) => {
     const token = req.cookies['connect.sid'];
     if (!token) {
@@ -10,4 +10,4 @@ const isAuthenticated = (req, res, next) => {
     }
     next();
 }
-module.exports = { isAuthenticated };
+export default isAuthenticated;

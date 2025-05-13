@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 const connectToServer = () => {
     mongoose.connect(process.env.mongoDB_URL)
@@ -9,4 +9,4 @@ const connectToServer = () => {
             console.error("Error connecting to MongoDB:", err);
         });
 }
-module.exports = connectToServer
+export default connectToServer

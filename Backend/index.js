@@ -1,20 +1,30 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
-const getRepoFileStructure = require('./Github');
-const main = require('./Gemini');
-const fs = require('fs');
-const errorMiddleware = require('./middleware/Error');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const passport = require('passport');
-require('./config/Passport');
-const connectToServer = require('./DB/Connection')
-const cluster = require('cluster')
-const numCPUs = require('node:os').availableParallelism()
-const process = require('node:process');
-const { error } = require('node:console');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import getRepoFileStructure from './Github.js';
+import main from './Gemini.js';
+import fs from 'fs';
+import errorMiddleware from './middleware/Error.js';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import passport from 'passport';
+import './config/Passport.js';
+import connectToServer from './DB/Connection.js';
+import cluster from 'cluster';
+import os from 'node:os';
+import process from 'node:process';
+import { error } from 'node:console';
+import authRoutes from './routes/authRoutes.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config();
+
+const numCPUs = os.availableParallelism();
 
 
 const PORT = process.env.PORT || 8000;
@@ -62,7 +72,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/auth', require('./routes/authRoutes'));
+app.use('/auth', authRoutes);
 
 
 

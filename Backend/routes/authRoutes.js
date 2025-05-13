@@ -1,7 +1,9 @@
-const router = require('express').Router();
-const passport = require('passport');
-const {myprofile , logout} = require('../config/user');
-const { isAuthenticated } = require('../middleware/auth');
+import express from 'express';
+import passport from 'passport';
+import { myprofile, logout } from '../config/user.js';
+import isAuthenticated  from '../middleware/auth.js';
+
+const router = express.Router();
 
 // Google Auth
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -23,4 +25,4 @@ router.get('/logout', logout);
 router.get('/me', isAuthenticated, myprofile)
 
 
-module.exports = router;
+export default router;

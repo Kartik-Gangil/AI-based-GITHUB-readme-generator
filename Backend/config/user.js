@@ -18,4 +18,4 @@ const logout = (req, res, next) => {
    })
 }
 
-module.exports = {myprofile,logout}
+export {myprofile,logout}
