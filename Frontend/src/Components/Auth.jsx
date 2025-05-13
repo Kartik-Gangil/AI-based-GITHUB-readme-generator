@@ -67,7 +67,7 @@ const Auth = () => {
 
                     {/* Google Login */}
 
-                    <a href="http://localhost:8000/auth/google">
+                    <a href="https://ai-based-github-readme-generator-production.up.railway.app/auth/google">
                         <button className="w-full mb-3 flex items-center justify-center gap-2 bg-white border py-2 rounded-lg hover:bg-gray-500 hover:cursor-pointer transition">
                             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
                             <span>Continue with Google</span>
@@ -77,7 +77,7 @@ const Auth = () => {
                     {/* Divider */}
                     <div className="my-3 text-center text-gray-800">OR</div>
                     {/* GitHub Login */}
-                    <a href="http://localhost:8000/auth/github">
+                    <a href="https://ai-based-github-readme-generator-production.up.railway.app/auth/github">
                         <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg border hover:bg-gray-500 hover:cursor-pointer transition">
                             <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" className="w-5 h-5" />
                             <span>Continue with GitHub</span>
