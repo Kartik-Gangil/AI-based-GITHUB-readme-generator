@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const connectToServer = () => {
-    mongoose.connect("mongodb+srv://kartikgangil:AIGithubReadmeGenerator@cluster0.lststwn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    mongoose.connect(process.env.mongoDB_URL)
         .then(() => {
             console.log("Connected to MongoDB");
         })

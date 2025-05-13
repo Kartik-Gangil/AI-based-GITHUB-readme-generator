@@ -107,7 +107,7 @@ app.post('/getReadme', async (req, res) => {
                 console.error("Download error:", err);
                 return res.status(500).send("Error downloading the file.");
             }
-            fs.unlink(filePath); // Delete the file after download
+            fs.unlinkSync(filePath); // Delete the file after download
         });
     } catch (error) {
         res.status(500).json({ error: 'Error generating readme' + error.message });
