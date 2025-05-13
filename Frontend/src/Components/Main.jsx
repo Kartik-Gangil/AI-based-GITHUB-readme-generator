@@ -1,16 +1,17 @@
 import { IoCloudDownloadOutline } from "react-icons/io5"
 import axios from "axios"
 import Loader from './Loader'
-import MD_viewer from "./MD_viewer"
+import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
     const [loader, setLoader] = useState(false)
     const [User, setUser] = useState('')
+    const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
 
     const navigate = useNavigate();
-
+   
     const handelISAuthenticated = () => {
         try {
             axios.get('http://localhost:8000/auth/me', {
@@ -40,6 +41,7 @@ function Main() {
 
     useEffect(() => {
         handelISAuthenticated()
+
     }, [handelISAuthenticated])
 
     const handelGenerate = async () => {
@@ -48,8 +50,9 @@ function Main() {
             url: url
         })
         if (response.status === 200) {
-            alert(response.data.message)
+            toast.success(response.data.message)
             localStorage.setItem('repo', response.data.repo)
+            setRepoName(response.data.repo) 
             setLoader(false)
         } else {
             console.error('Error generating readme:', response.data)
@@ -70,6 +73,8 @@ function Main() {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
+            localStorage.removeItem('repo')
+            setRepoName('')
         })
             .catch(error => {
                 console.error('Download failed:', error);
@@ -91,18 +96,29 @@ function Main() {
 
                     <button className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer' onClick={handelGenerate}>Generate</button>
                 </div>
-                
+
 
                 {loader &&
                     <Loader />}
                 {
 
-                    localStorage.getItem('repo') && (
+                    repoName && (
 
                         <button onClick={handelDownload} className='mt-6 px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>)
                 }
 
-
+                <ToastContainer 
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    />
+          
             </div>
         </>
 

@@ -14,9 +14,9 @@
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-github-markdown": "^1.0.0-beta.4",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
+    "react-toastify": "^11.0.5",
     "styled-components": "^6.1.17",
     "tailwindcss": "^4.1.4"
   },

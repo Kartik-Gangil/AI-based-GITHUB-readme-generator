@@ -20,18 +20,18 @@ const { error } = require('node:console');
 const PORT = process.env.PORT || 8000;
 
 
-// if (cluster.isPrimary) {
-//     console.log(`Primary ${process.pid} is running`)
-//     // fork workers
+if (cluster.isPrimary) {
+    console.log(`Primary ${process.pid} is running`)
+    // fork workers
 
-//     for (let i = 0; i < numCPUs; i++){
-//         cluster.fork()
-//     }
+    for (let i = 0; i < numCPUs; i++){
+        cluster.fork()
+    }
 
-//     cluster.on('exit', (worker, code, signal) => console.log(`worker ${worker.process.pid} died`))
+    cluster.on('exit', (worker, code, signal) => console.log(`worker ${worker.process.pid} died`))
 
-// }
-// else {
+}
+else {
 
 const app = express();
 app.use(express.json());
@@ -123,7 +123,7 @@ app.listen(PORT, () => {
 
 // console.log(`Worker ${process.pid} started`)
 
-// }
+}
 
 
 

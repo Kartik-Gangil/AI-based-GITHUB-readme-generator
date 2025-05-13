@@ -7,28 +7,32 @@ const User = new Schema({
         type: String,
         unique: true
     },
-    Photo:String,
+    Photo: String,
     name: {
         required: true,
-        type : String
+        type: String
     },
     Email: {
         required: true,
-        type : String
+        type: String
     },
     Password: {
         required: true,
-        type : String
+        type: String
     },
     mode: {
         type: String,
         required: true,
     },
+    Limit: {
+        type: Number,
+        default: 2
+    },
     Created_at: {
         type: Date,
         default: Date.now
-}
-    
+    }
+
 })
 
-module.exports = mongoose.model('User',User);
+module.exports = mongoose.model('User', User);
