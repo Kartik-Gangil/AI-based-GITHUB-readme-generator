@@ -4,18 +4,11 @@ import dotenv from 'dotenv';
 import getRepoFileStructure from './Github.js';
 import main from './Gemini.js';
 import fs from 'fs';
-// import errorMiddleware from './middleware/Error.js';
 import path from 'path';
-// import cookieParser from 'cookie-parser';
-// import session from 'express-session';
-// import passport from 'passport';
 import './config/Passport.js';
-// import connectToServer from './DB/Connection.js';
 import cluster from 'cluster';
 import os from 'node:os';
 import process from 'node:process';
-// import { error } from 'node:console';
-// import authRoutes from './routes/authRoutes.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
