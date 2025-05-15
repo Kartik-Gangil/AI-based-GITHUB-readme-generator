@@ -53,26 +53,26 @@ app.use(cors({
 
 // auth route implementation
 
-connectToServer()
+// connectToServer()
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false, // set to true in HTTPS
-        httpOnly: true,
-        sameSite: 'lax'
-    }
-}));
-app.use(errorMiddleware)
-app.use(cookieParser());
-app.use(passport.authenticate('session'));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         secure: false, // set to true in HTTPS
+//         httpOnly: true,
+//         sameSite: 'lax'
+//     }
+// }));
+// app.use(errorMiddleware)
+// app.use(cookieParser());
+// app.use(passport.authenticate('session'));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Routes
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
 
 
 

@@ -3,46 +3,46 @@ import axios from "axios"
 import Loader from './Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
     const [loader, setLoader] = useState(false)
     const [User, setUser] = useState('')
     const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
    
-    const handelISAuthenticated = () => {
-        try {
-            axios.get('http://localhost:8000/auth/me', {
-                withCredentials: true
-            })
-                .then((res) => {
-                    if (res.data.success == true) {
-                        console.log("authenticated")
-                        setUser(res.data.user.name)
-                    }
-                })
-                .catch(async (err) => {
+    // const handelISAuthenticated = () => {
+    //     try {
+    //         axios.get('http://localhost:8000/auth/me', {
+    //             withCredentials: true
+    //         })
+    //             .then((res) => {
+    //                 if (res.data.success == true) {
+    //                     console.log("authenticated")
+    //                     setUser(res.data.user.name)
+    //                 }
+    //             })
+    //             .catch(async (err) => {
 
-                    if (err.response && err.response.status === 401) {
-                        // Redirect to login if unauthorized
-                        await navigate('/auth');
-                    } else {
-                        console.error('Error checking authentication:', err);
-                    }
+    //                 if (err.response && err.response.status === 401) {
+    //                     // Redirect to login if unauthorized
+    //                     await navigate('/auth');
+    //                 } else {
+    //                     console.error('Error checking authentication:', err);
+    //                 }
 
-                })
-        }
-        catch (error) {
-            console.error('Error checking authentication:', error);
-        }
-    }
+    //             })
+    //     }
+    //     catch (error) {
+    //         console.error('Error checking authentication:', error);
+    //     }
+    // }
 
-    useEffect(() => {
-        handelISAuthenticated()
+    // useEffect(() => {
+    //     handelISAuthenticated()
 
-    }, [handelISAuthenticated])
+    // }, [handelISAuthenticated])
 
     const handelGenerate = async () => {
         setLoader(true)
