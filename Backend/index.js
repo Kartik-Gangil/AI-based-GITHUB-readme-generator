@@ -5,7 +5,6 @@ import getRepoFileStructure from './Github.js';
 import main from './Gemini.js';
 import fs from 'fs';
 import path from 'path';
-import './config/Passport.js';
 import cluster from 'cluster';
 import os from 'node:os';
 import process from 'node:process';
