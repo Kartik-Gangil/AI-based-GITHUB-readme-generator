@@ -2,7 +2,7 @@ import { IoCloudDownloadOutline } from "react-icons/io5"
 import axios from "axios"
 import Loader from './Loader'
 import { ToastContainer, toast } from 'react-toastify';
-import MD_viewer from "./MD_viewer"
+
 import { useEffect, useState } from 'react'
 // import { useNavigate } from 'react-router-dom'
 function Main() {
