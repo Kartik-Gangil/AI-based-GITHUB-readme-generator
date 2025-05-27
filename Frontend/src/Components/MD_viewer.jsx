@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { MarkdownEditor, MarkdownViewer } from 'react-github-markdown'
 const MD_viewer = ({body}) => {
-  const [markdown, setMarkdown] = useState(body)
+  const [markdown, setMarkdown] = useState("## hello world")
   return (
     <div className='mx-95 mb-10 overflow-scroll'>
      
