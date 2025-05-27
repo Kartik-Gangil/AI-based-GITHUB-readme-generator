@@ -11,6 +11,23 @@ function Main() {
     // const [User, setUser] = useState('')
     const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
 
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        script.async = true;
+        script.setAttribute('data-ad-client', 'ca-pub-5674582652324003');
+        document.head.appendChild(script);
+
+        script.onload = () => {
+            try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.error("AdSense error:", e);
+            }
+        };
+    }, [])
+
+
 
     const handelGenerate = async () => {
         setLoader(true)
@@ -54,59 +71,79 @@ function Main() {
 
 
     return (
-        <div className="bg-gradient-to-r from-blue-500 to-purple-500 to-50% overflow-hidden h-screen">
-            <div className="grid grid-flow-col grid-rows-none gap-4">
-                <div>
-                    ads show here
+        <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-purple-500">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr] gap-0 flex-grow">
+
+                {/* Left Ad */}
+                <div className="flex justify-center items-center p-4">
+                    <ins className="adsbygoogle"
+                        style={{"display":"block"}}
+                        data-ad-client="ca-pub-5674582652324003"
+                        data-ad-slot="4174333081"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </div>
-                <div>
-                    <div className='flex flex-col justify-center items-center  '>
-                        <h1 className='text-2xl mt-2 font-bold'>Welcome </h1>
-                        <h1 className='text-5xl mt-5 font-bold'>AI ReadMe Generator</h1>
-                        <div className='flex justify-center-safe align-center my-10 gap-2'>
-                            <input type="text" placeholder='Past your github repo link' className='px-3 py-2 border-1 outline-offset-0 outline-blue-500 focus:outline-2 focus:border-0 rounded-md
-        w-96' value={url} onChange={e => setUrl(e.target.value)} />
 
-                            <button className='px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer' onClick={handelGenerate}>Generate</button>
-                        </div>
+                {/* Main Content */}
+                <div className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 py-10 px-4">
+                    <h1 className="text-2xl font-bold ">Welcome</h1>
+                    <h1 className="text-4xl md:text-5xl mt-4 font-bold text-center ">
+                        AI ReadMe Generator
+                    </h1>
 
-
-                        {loader &&
-                            <Loader />}
-                        {
-
-                            repoName && (
-
-                                <button onClick={handelDownload} className='mt-6 px-2 py-2 border-2 rounded-lg bg-blue-700 text-white hover:bg-green-700 hover:cursor-pointer flex items-center gap-2'>Download <IoCloudDownloadOutline className='text-2xl ' /></button>)
-                        }
-
-                        <ToastContainer
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick={false}
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme="light"
+                    <div className="flex flex-col sm:flex-row justify-center items-center my-10 gap-4 w-full max-w-xl">
+                        <input
+                            type="text"
+                            placeholder="Paste your GitHub repo link"
+                            className="px-3 py-2 border rounded-md w-full focus:outline-blue-500"
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)}
                         />
-
-
-                       
-
+                        <button
+                            onClick={handelGenerate}
+                            className="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 transition"
+                        >
+                            Generate
+                        </button>
                     </div>
 
+                    {loader && <Loader />}
 
+                    {repoName && (
+                        <button
+                            onClick={handelDownload}
+                            className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 transition"
+                        >
+                            Download <IoCloudDownloadOutline className="text-2xl" />
+                        </button>
+                    )}
+
+                    <ToastContainer
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                 </div>
-                <div>
-                    ads show here
 
+                {/* Right Ad */}
+                <div className=" flex justify-center items-center p-4">
+                    <ins className="adsbygoogle"
+                        style={{"display":"block"}}
+                        data-ad-client="ca-pub-5674582652324003"
+                        data-ad-slot="4174333081"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </div>
-
 
             </div>
         </div>
+
 
     )
 }
