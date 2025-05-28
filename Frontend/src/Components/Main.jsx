@@ -31,7 +31,7 @@ function Main() {
 
     const handelGenerate = async () => {
         setLoader(true)
-        const response = await axios.post('https://ai-based-github-readme-generator-production-458e.up.railway.app/', {
+        const response = await axios.post('https://ai-based-github-readme-generator-production.up.railway.app/', {
             url: url
         })
         if (response.status === 200) {
@@ -46,7 +46,7 @@ function Main() {
     }
 
     const handelDownload = async () => {
-        await axios.post('https://ai-based-github-readme-generator-production-458e.up.railway.app/getReadme',
+        await axios.post('https://ai-based-github-readme-generator-production.up.railway.app/getReadme',
             { repo: localStorage.getItem('repo') },
             { responseType: 'blob' }  // Important for downloading files
         ).then(response => {
