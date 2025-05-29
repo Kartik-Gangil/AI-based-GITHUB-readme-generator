@@ -3,14 +3,15 @@ import axios from "axios"
 import Loader from './Loader'
 import { ToastContainer, toast } from 'react-toastify';
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
     const [loader, setLoader] = useState(false)
     // const [User, setUser] = useState('')
     const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
-
+    const leftAdRef = useRef(null);
+    const rightAdRef = useRef(null);
     useEffect(() => {
         const script = document.createElement('script');
         script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
@@ -20,12 +21,17 @@ function Main() {
 
         script.onload = () => {
             try {
-                (window.adsbygoogle = window.adsbygoogle || []).push({});
+                if (leftAdRef.current) {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                }
+                if (rightAdRef.current) {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                }
             } catch (e) {
-                console.error("AdSense error:", e);
+                console.error("AdSense push error:", e);
             }
         };
-    }, [])
+    }, []);
 
 
 
@@ -77,7 +83,7 @@ function Main() {
                 {/* Left Ad */}
                 <div className="flex justify-center items-center p-4">
                     <ins className="adsbygoogle"
-                        style={{"display":"block"}}
+                        style={{ "display": "block" }}
                         data-ad-client="ca-pub-5674582652324003"
                         data-ad-slot="4174333081"
                         data-ad-format="auto"
@@ -134,7 +140,7 @@ function Main() {
                 {/* Right Ad */}
                 <div className=" flex justify-center items-center p-4">
                     <ins className="adsbygoogle"
-                        style={{"display":"block"}}
+                        style={{ "display": "block" }}
                         data-ad-client="ca-pub-5674582652324003"
                         data-ad-slot="4174333081"
                         data-ad-format="auto"
