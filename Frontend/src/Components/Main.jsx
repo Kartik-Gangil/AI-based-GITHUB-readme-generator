@@ -85,7 +85,7 @@ function Main() {
                     <ins className="adsbygoogle"
                         style={{ "display": "block" }}
                         data-ad-client="ca-pub-5674582652324003"
-                        data-ad-slot="4174333081"
+                        data-ad-slot="5737097703"
                         data-ad-format="auto"
                         data-full-width-responsive="true"></ins>
                 </div>
@@ -142,7 +142,7 @@ function Main() {
                     <ins className="adsbygoogle"
                         style={{ "display": "block" }}
                         data-ad-client="ca-pub-5674582652324003"
-                        data-ad-slot="4174333081"
+                        data-ad-slot="5737097703"
                         data-ad-format="auto"
                         data-full-width-responsive="true"></ins>
                 </div>
