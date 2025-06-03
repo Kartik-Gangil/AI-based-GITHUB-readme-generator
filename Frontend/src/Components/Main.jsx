@@ -16,7 +16,7 @@ function Main() {
         const script = document.createElement('script');
         script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
         script.async = true;
-        script.setAttribute('data-ad-client', 'ca-pub-5674582652324003');
+        script.setAttribute('data-ad-client', 'ca-pub-4926740588559413');
         document.head.appendChild(script);
 
         script.onload = () => {
@@ -84,8 +84,8 @@ function Main() {
                 <div className="flex justify-center items-center p-4">
                     <ins className="adsbygoogle"
                         style={{ "display": "block" }}
-                        data-ad-client="ca-pub-5674582652324003"
-                        data-ad-slot="5737097703"
+                        data-ad-client="ca-pub-4926740588559413"
+                        data-ad-slot="2035765656"
                         data-ad-format="auto"
                         data-full-width-responsive="true"></ins>
                 </div>
@@ -141,8 +141,8 @@ function Main() {
                 <div className=" flex justify-center items-center p-4">
                     <ins className="adsbygoogle"
                         style={{ "display": "block" }}
-                        data-ad-client="ca-pub-5674582652324003"
-                        data-ad-slot="5737097703"
+                        data-ad-client="ca-pub-4926740588559413"
+                        data-ad-slot="2035765656"
                         data-ad-format="auto"
                         data-full-width-responsive="true"></ins>
                 </div>
