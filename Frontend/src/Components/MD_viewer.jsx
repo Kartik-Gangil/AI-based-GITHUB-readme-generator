@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import { MarkdownEditor, MarkdownViewer } from 'react-github-markdown'
-const MD_viewer = ({body}) => {
-  const [markdown, setMarkdown] = useState("## hello world")
+import React from 'react';
+import MarkdownPreview from '@uiw/react-markdown-preview';
+
+export default function MD_viewer({Source}) {
+  
+
   return (
-    <div className='mx-95 mb-10 overflow-scroll'>
-     
-      <MarkdownViewer markdown={markdown}  />
-    </div>
+    <MarkdownPreview source={Source} style={{ padding: 16 }} />
   )
 }
-
-export default MD_viewer

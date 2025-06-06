@@ -4,11 +4,12 @@ import Loader from './Loader'
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useEffect, useRef, useState } from 'react'
+import MD_viewer from "./MD_viewer";
 // import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
     const [loader, setLoader] = useState(false)
-    // const [User, setUser] = useState('')
+    const [Source, setSource] = useState()
     const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
     const leftAdRef = useRef(null);
     const rightAdRef = useRef(null);
@@ -44,6 +45,7 @@ function Main() {
             toast.success(response.data.message)
             localStorage.setItem('repo', response.data.repo)
             setRepoName(response.data.repo)
+            setSource(response.data.content)
             setLoader(false)
         } else {
             console.error('Error generating readme:', response.data)
@@ -111,17 +113,21 @@ function Main() {
                         >
                             Generate
                         </button>
+                        {repoName && (
+
+                            <button
+                                onClick={handelDownload}
+                                className=" px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 transition"
+                            >
+                                Download <IoCloudDownloadOutline className="text-2xl" />
+                            </button>
+                        )}
                     </div>
 
                     {loader && <Loader />}
-
+                    
                     {repoName && (
-                        <button
-                            onClick={handelDownload}
-                            className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 transition"
-                        >
-                            Download <IoCloudDownloadOutline className="text-2xl" />
-                        </button>
+                        <MD_viewer Source={Source} />
                     )}
 
                     <ToastContainer

@@ -57,9 +57,10 @@ else {
             return res.status(400).json({ error: 'URL is required' });
         }
         try {
-            const data = await Generate_Readme(url);
-            if (data) {
-                res.status(200).json({ message: 'File written successfully', repo: (url.split('/').pop()).replace(/\.git$/, '') });
+            const { flag, content } = await Generate_Readme(url);
+            
+            if (flag) {
+                res.status(200).json({ message: 'File written successfully', repo: (url.split('/').pop()).replace(/\.git$/, '')  , content});
             }
             else {
                 res.status(500).json({ error: 'Error writing file' });
@@ -134,7 +135,7 @@ async function Generate_Readme(url) {
 
         console.log('File written successfully');
         flag = true;
-        return flag;
+        return {flag , content};
         // res.status(200).json({message:'file written succesfully' , repo})
     } catch (err) {
         console.error('Error writing file:', err);
