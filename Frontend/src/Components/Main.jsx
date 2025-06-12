@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { useEffect, useRef, useState } from 'react'
 import MD_viewer from "./MD_viewer";
+import CursorGradient from "./CursorGradient";
 // import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
@@ -13,26 +14,26 @@ function Main() {
     const [repoName, setRepoName] = useState(localStorage.getItem('repo') || '');
     const leftAdRef = useRef(null);
     const rightAdRef = useRef(null);
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-        script.async = true;
-        script.setAttribute('data-ad-client', 'ca-pub-4926740588559413');
-        document.head.appendChild(script);
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+    //     script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+    //     script.async = true;
+    //     script.setAttribute('data-ad-client', 'ca-pub-4926740588559413');
+    //     document.head.appendChild(script);
 
-        script.onload = () => {
-            try {
-                if (leftAdRef.current) {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                }
-                if (rightAdRef.current) {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            } catch (e) {
-                console.error("AdSense push error:", e);
-            }
-        };
-    }, []);
+    //     script.onload = () => {
+    //         try {
+    //             if (leftAdRef.current) {
+    //                 (window.adsbygoogle = window.adsbygoogle || []).push({});
+    //             }
+    //             if (rightAdRef.current) {
+    //                 (window.adsbygoogle = window.adsbygoogle || []).push({});
+    //             }
+    //         } catch (e) {
+    //             console.error("AdSense push error:", e);
+    //         }
+    //     };
+    // }, []);
 
 
 
@@ -79,37 +80,31 @@ function Main() {
 
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-purple-500">
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr] gap-0 flex-grow">
+        <div className="relative overflow-hidden">
+            <CursorGradient />
+            <div className="min-h-screen px-6 py-12 flex flex-col bg-[#0F0F1B]">
 
-                {/* Left Ad */}
-                <div className="flex justify-center items-center p-4">
-                    <ins className="adsbygoogle"
-                        style={{ "display": "block" }}
-                        data-ad-client="ca-pub-4926740588559413"
-                        data-ad-slot="2035765656"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </div>
 
                 {/* Main Content */}
-                <div className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 py-10 px-4">
-                    <h1 className="text-2xl font-bold ">Welcome</h1>
-                    <h1 className="text-4xl md:text-5xl mt-4 font-bold text-center ">
-                        AI ReadMe Generator
-                    </h1>
+                <div className="flex flex-col justify-center items-center text-white">
 
+                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+                        ReadmeUp...
+                    </h1>
+                    <p className="mt-4 text-lg text-center text-[#38BDF8] drop-shadow-[0_0_10px_#38BDF8]">
+                        Instantly generate professional README.md files for your GitHub repos.
+                    </p>
                     <div className="flex flex-col sm:flex-row justify-center items-center my-10 gap-4 w-full max-w-xl">
                         <input
                             type="text"
                             placeholder="Paste your GitHub repo link"
-                            className="px-3 py-2 border rounded-md w-full focus:outline-blue-500"
+                            className="px-3 py-2 border rounded-md w-full focus:outline-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-300"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                         />
                         <button
                             onClick={handelGenerate}
-                            className="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 transition"
+                            className="px-4 hover:bg-[#0EA5E9] py-2 bg-blue-700 text-white rounded-lg  hover:shadow-[0_0_16px_#38BDF8] transition duration-300 hover:scale-105"
                         >
                             Generate
                         </button>
@@ -117,7 +112,7 @@ function Main() {
 
                             <button
                                 onClick={handelDownload}
-                                className=" px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-green-700 flex items-center gap-2 transition"
+                                className=" px-4 py-2 hover:bg-[#0EA5E9] bg-blue-700 text-white rounded-lg  flex items-center gap-2 hover:shadow-[0_0_16px_#38BDF8] transition duration-300 hover:scale-105"
                             >
                                 Download <IoCloudDownloadOutline className="text-2xl" />
                             </button>
@@ -125,10 +120,14 @@ function Main() {
                     </div>
 
                     {loader && <Loader />}
-                    
-                    {repoName && (
-                        <MD_viewer Source={Source} />
-                    )}
+                    {repoName &&
+                        (
+                            <section className="w-full max-w-4xl px-4 sm:px-6 md:px-8 py-6 border border-[#0EA5E9] shadow-[0_0_12px_#38BDF8] rounded-lg mt-6 mx-auto">
+
+                                <MD_viewer Source={Source} />
+
+                            </section>
+                        )}
 
                     <ToastContainer
                         autoClose={5000}
@@ -142,20 +141,8 @@ function Main() {
                         theme="light"
                     />
                 </div>
-
-                {/* Right Ad */}
-                <div className=" flex justify-center items-center p-4">
-                    <ins className="adsbygoogle"
-                        style={{ "display": "block" }}
-                        data-ad-client="ca-pub-4926740588559413"
-                        data-ad-slot="2035765656"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </div>
-
             </div>
         </div>
-
 
     )
 }
