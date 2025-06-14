@@ -1,6 +1,8 @@
 import Testimonials from './Testimonials'
 import CursorGradient from './CursorGradient'
 import { Link } from 'react-router-dom'
+import Rocket_Animation from './Rocket_Animation'
+
 const LandingPage = () => {
 
     const comments = [
@@ -54,8 +56,8 @@ const LandingPage = () => {
             <div className="min-h-screen px-6 py-12 text-white font-sans" style={{ backgroundColor: '#0F0F1B' }}>
                 {/* Header */}
                 <header className="max-w-5xl mx-auto text-center mb-12">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl" >
-                        ReadmeUp...
+                    <h1 className="text-4xl flex items-center justify-center font-bold tracking-tight sm:text-5xl" >
+                      <Rocket_Animation/> ReadmeUp...
                     </h1>
                     <p className="mt-4 text-lg text-[#38BDF8] drop-shadow-[0_0_10px_#38BDF8]">
                         Instantly generate professional README.md files for your GitHub repos.

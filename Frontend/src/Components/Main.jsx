@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react'
 import MD_viewer from "./MD_viewer";
 import CursorGradient from "./CursorGradient";
+import Rocket_Animation from "./Rocket_Animation";
 // import { useNavigate } from 'react-router-dom'
 function Main() {
     const [url, setUrl] = useState('')
@@ -35,22 +36,34 @@ function Main() {
     //     };
     // }, []);
 
-
+    // https://github.com/Kartik-Gangil/AI-based-GITHUB-readme-generator.git
 
     const handelGenerate = async () => {
         setLoader(true)
-        const response = await axios.post('https://ai-based-github-readme-generator-production.up.railway.app/', {
-            url: url
-        })
-        if (response.status === 200) {
-            toast.success(response.data.message)
-            localStorage.setItem('repo', response.data.repo)
-            setRepoName(response.data.repo)
-            setSource(response.data.content)
+        if (url === '') {
             setLoader(false)
-        } else {
-            console.error('Error generating readme:', response.data)
+            toast.error('Please enter a URL')
+            return;
+        }
+        else if (url && !url.includes('https://github.com') && !url.includes('.git')) { 
             setLoader(false)
+            toast.error('Please enter a valid GitHub repository URL')
+            return;
+        }
+        else {
+            const response = await axios.post('https://ai-based-github-readme-generator-production.up.railway.app/', {
+                url: url
+            })
+            if (response.status === 200) {
+                toast.success(response.data.message)
+                localStorage.setItem('repo', response.data.repo)
+                setRepoName(response.data.repo)
+                setSource(response.data.content)
+                setLoader(false)
+            } else {
+                console.error('Error generating readme:', response.data)
+                setLoader(false)
+            }
         }
     }
 
@@ -88,8 +101,8 @@ function Main() {
                 {/* Main Content */}
                 <div className="flex flex-col justify-center items-center text-white">
 
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                        ReadmeUp...
+                    <h1 className="text-4xl flex items-center justify-center font-bold tracking-tight sm:text-5xl">
+                        <Rocket_Animation /> ReadmeUp...
                     </h1>
                     <p className="mt-4 text-lg text-center text-[#38BDF8] drop-shadow-[0_0_10px_#38BDF8]">
                         Instantly generate professional README.md files for your GitHub repos.
@@ -138,7 +151,7 @@ function Main() {
                         pauseOnFocusLoss
                         draggable
                         pauseOnHover
-                        theme="light"
+                        theme="dark"
                     />
                 </div>
             </div>
