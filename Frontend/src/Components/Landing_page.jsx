@@ -102,7 +102,7 @@ const LandingPage = () => {
 
                 {/* Footer */}
                 <footer className="text-center text-gray-400 text-sm mt-16">
-                    Built with ❤️ by Kartik | <a href="https://github.com/Kartikgupta666" className="underline">GitHub</a>
+                    Built with ❤️ by Kartik | <a href="https://github.com/Kartik-Gangil/AI-based-GITHUB-readme-generator.git" className="underline">GitHub</a>
                 </footer>
             </div>
         </div>
