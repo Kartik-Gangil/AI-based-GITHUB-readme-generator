@@ -57,28 +57,33 @@ const LandingPage = () => {
                 {/* Header */}
                 <header className="max-w-5xl mx-auto text-center mb-12">
                     <h1 className="text-4xl flex items-center justify-center font-bold tracking-tight sm:text-5xl" >
-                      <Rocket_Animation/> ReadmeUp...
+                        <Rocket_Animation /> ReadmeUp...
                     </h1>
                     <p className="mt-4 text-lg text-[#38BDF8] drop-shadow-[0_0_10px_#38BDF8]">
                         Instantly generate professional README.md files for your GitHub repos.
                     </p>
-                    <div className="mt-6">
+                    <div className="mt-6 ">
                         <Link
                             to="/main"
                             rel="noreferrer"
-                            className="bg-[#38BDF8] hover:bg-[#0EA5E9] text-white px-6 py-3 rounded-xl font-semibold shadow-[0_0_10px_#38BDF8] hover:shadow-[0_0_16px_#38BDF8] transition duration-300 hover:scale-105"
+                            className="bg-[#38BDF8] hover:bg-[#0EA5E9] text-white px-6 py-3 rounded-xl font-semibold shadow-[0_0_10px_#38BDF8] hover:shadow-[0_0_16px_#38BDF8] transition duration-300 hover:scale-105 "
                         >
                             Try It Now →
                         </Link>
                     </div>
-                    <div className="mt-4 text-sm text-[#94A3B8] drop-shadow-[0_0_10px_#38BDF8]">
+                    <div className="mt-6 text-sm text-[#94A3B8] drop-shadow-[0_0_10px_#38BDF8]">
                         ✅ Used by 173+ developers worldwide
                     </div>
-<Link href="https://www.producthunt.com/products/readmeup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-readmeup" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=993726&theme=dark&t=1752725675776" alt="ReadmeUp - Instantly&#0032;generate&#0032;professional&#0032;README&#0032;files&#0032;for&#0032;your&#0032;GitHub | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></Link>
                 </header>
+                <div className="flex justify-center">
 
-               
-                
+                    <Link to="https://www.producthunt.com/products/readmeup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-readmeup" target="_blank">
+                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=993726&theme=dark&t=1752725675776" alt="ReadmeUp - Instantly&#0032;generate&#0032;professional&#0032;README&#0032;files&#0032;for&#0032;your&#0032;GitHub | Product Hunt" className='hover:bg-[#0EA5E9] text-white  rounded-xl font-semibold shadow-[0_0_10px_#38BDF8] hover:shadow-[0_0_16px_#38BDF8] transition duration-300 hover:scale-105 ' />
+                    </Link>
+                </div>
+
+
+
 
                 {/* Testimonials */}
                 <section className="max-w-6xl mx-auto mb-20 mt-10">
@@ -88,7 +93,7 @@ const LandingPage = () => {
                             <Testimonials
                                 desc={comment.comment}
                                 status={comment.name}
-                                key = {index}
+                                key={index}
                             />))}
 
                     </div>
