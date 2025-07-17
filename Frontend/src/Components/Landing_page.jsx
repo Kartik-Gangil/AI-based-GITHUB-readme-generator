@@ -74,17 +74,11 @@ const LandingPage = () => {
                     <div className="mt-4 text-sm text-[#94A3B8] drop-shadow-[0_0_10px_#38BDF8]">
                         ✅ Used by 173+ developers worldwide
                     </div>
+<Link href="https://www.producthunt.com/products/readmeup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-readmeup" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=993726&theme=dark&t=1752725675776" alt="ReadmeUp - Instantly&#0032;generate&#0032;professional&#0032;README&#0032;files&#0032;for&#0032;your&#0032;GitHub | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></Link>
                 </header>
 
-                {/* Demo Image */}
-                {/* <section className="w-full h-[300px] bg-[#38BDF8]/10 backdrop-blur-md flex items-center justify-center rounded-xl text-white text-lg">
-                    <img
-        src="https://your-demo-screenshot-url.com" // Replace with your demo screenshot
-        alt="Demo screenshot"
-        className="rounded-xl shadow-xl"
-      />
-                    [comming soon]
-                </section> */}
+               
+                
 
                 {/* Testimonials */}
                 <section className="max-w-6xl mx-auto mb-20 mt-10">
