@@ -46,7 +46,7 @@ function Main() {
     // https://github.com/Kartik-Gangil/AI-based-GITHUB-readme-generator.git
 
     useEffect(() => {
-        axios.get("https://leelafacility/api1/auth-check", {
+        axios.get("https://leelafacility.in/api1/auth-check", {
             withCredentials: true
         })
             .then(res => {
@@ -114,7 +114,7 @@ function Main() {
 
             const toastId = toast.loading("Analyzing repository...");
 
-            const response = await fetch("https://leelafacility/api1/", {
+            const response = await fetch("https://leelafacility.in/api1/", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -240,7 +240,7 @@ function Main() {
                                 <div className="flex justify-end">
 
                                     <a
-                                        href="https://leelafacility/api1/auth/github"
+                                        href="https://leelafacility.in/api1/auth/github"
                                         className="px-4 py-2 rounded-md bg-[#238636] hover:bg-[#2ea043] transition"
                                     >
                                         Login
