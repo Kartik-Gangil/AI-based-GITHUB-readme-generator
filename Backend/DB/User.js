@@ -1,5 +1,5 @@
 
-import mongoose, {Schema}  from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
 const User = new Schema({
     Id: {
@@ -8,25 +8,16 @@ const User = new Schema({
         unique: true
     },
     Photo: String,
+    Github_Uname: {
+        required: true,
+        type: String
+    },
     name: {
         required: true,
         type: String
     },
     Email: {
-        required: true,
         type: String
-    },
-    Password: {
-        required: true,
-        type: String
-    },
-    mode: {
-        type: String,
-        required: true,
-    },
-    Limit: {
-        type: Number,
-        default: 2
     },
     Created_at: {
         type: Date,

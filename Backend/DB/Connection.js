@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { config } from 'dotenv'
+config()
 
 const connectToServer = () => {
     mongoose.connect(process.env.mongoDB_URL)

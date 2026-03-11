@@ -1,10 +1,12 @@
 import { Octokit } from '@octokit/rest'
 import path from 'path'
 
-const oK = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-    userAgent: 'octokit/rest.js v1.2.3',
-});
+function createOctokit(token) {
+    return new Octokit({
+        auth: token,
+        userAgent: 'octokit/rest.js v1.2.3'
+    })
+}
 
 function parseURL(url) {
     try {
@@ -275,10 +277,149 @@ const Files = {
 };
 
 
+// file parser
+
+const fileParsers = {
+
+  "package.json": (content, path) => {
+    const pkg = JSON.parse(content);
+    return {
+      path,
+      type: "node-project",
+      dependencies: Object.keys(pkg.dependencies || {}),
+      devDependencies: Object.keys(pkg.devDependencies || {}),
+      scripts: Object.keys(pkg.scripts || {})
+    };
+  },
+
+  "tsconfig.json": (content, path) => {
+    const config = JSON.parse(content);
+    return {
+      path,
+      type: "typescript-config",
+      target: config.compilerOptions?.target,
+      module: config.compilerOptions?.module
+    };
+  },
+
+  "requirements.txt": (content, path) => ({
+    path,
+    type: "python-dependencies",
+    dependencies: content
+      .split("\n")
+      .map(d => d.trim())
+      .filter(Boolean)
+  }),
+
+  "requirement.txt": (content, path) => ({
+    path,
+    type: "python-dependencies",
+    dependencies: content
+      .split("\n")
+      .map(d => d.trim())
+      .filter(Boolean)
+  }),
+
+  "go.mod": (content, path) => ({
+    path,
+    type: "go-module",
+    dependencies: content
+      .split("\n")
+      .filter(line => line.startsWith("require"))
+  }),
+
+  "composer.json": (content, path) => {
+    const comp = JSON.parse(content);
+    return {
+      path,
+      type: "php-project",
+      dependencies: Object.keys(comp.require || {})
+    };
+  },
+
+  "Dockerfile": (content, path) => ({
+    path,
+    type: "dockerfile",
+    baseImage: content.split("\n")[0].replace("FROM", "").trim()
+  }),
+
+  "pom.xml": (content, path) => ({
+    path,
+    type: "maven-project",
+    summary: "Java Maven project detected"
+  }),
+
+  "build.gradle": (content, path) => ({
+    path,
+    type: "gradle-project",
+    summary: "Java/Kotlin Gradle build configuration"
+  }),
+
+  "build.gradle.kts": (content, path) => ({
+    path,
+    type: "gradle-project",
+    summary: "Java/Kotlin Gradle build configuration"
+  })
+};
+
+
+
+async function getFile(owner, repo, path, oK) {
+    try {
+        const response = await oK.repos.getContent({
+            owner,
+            repo,
+            path: path
+        })
+        const content = Buffer.from(response.data.content, "base64").toString("utf-8");
+
+        return content;
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+function optimizeFiles(files) {
+
+  return files.map(file => {
+
+    const { path, content } = file.value || file;
+    const base = path.split("/").pop();
+
+    try {
+
+      if (fileParsers[base]) {
+        return fileParsers[base](content, path);
+      }
+
+      if (base.includes("docker-compose")) {
+        return {
+          path,
+          type: "docker-compose",
+          summary: "Docker services configuration detected"
+        };
+      }
+
+      return {
+        path,
+        type: "source-file"
+      };
+
+    } catch {
+      return {
+        path,
+        type: "unknown",
+        error: "Failed to parse file"
+      };
+    }
+
+  });
+}
 
 
 //  fetch the highest contribute language from the git repositry
-async function getRepoLanguageList(url) {
+async function getRepoLanguageList(url, oK) {
     try {
         const { owner, repo } = parseURL(url);
         const response = await oK.repos.listLanguages({
@@ -287,6 +428,7 @@ async function getRepoLanguageList(url) {
         });
 
         const content = response.data;
+        console.log({ languageFunction: response })
         const Language = Object.keys(content).reduce((a, b) => content[a] > content[b] ? a : b);
 
         return Language;
@@ -296,23 +438,24 @@ async function getRepoLanguageList(url) {
 }
 
 // this function fetch the content from the git repositry file
-async function getRepoContent(url, paths) {
+async function getRepoContent(url, paths, oK) {
     try {
         const { owner, repo } = parseURL(url);
         let Content = "";
-        for (const path of paths) {
-            const response = await oK.repos.getContent({
-                owner,
-                repo,
-                path: path
+        const file = await Promise.allSettled(
+            paths.map(async (path) => {
+                const content = await getFile(owner, repo, path, oK);
+                return { path, content };
             })
+        )
+        console.log(file)
+        console.log(optimizeFiles(file))
 
-            const content = Buffer.from(response.data.content, 'base64').toString('utf8');
-            Content += `project name: ${repo} \n`;
-            Content += "\n\n\n----------------------- another file--------------------------------- \n\n\n";
-            Content += content;
-        }
-        // console.log(Content)
+        
+        Content += `project name: ${repo} \n`;
+        Content += `${JSON.stringify(optimizeFiles(file), null, 2)}`
+
+        console.log(Content)
         return { Content, repo };
     } catch (error) {
         console.error("Error fetching repo info:", error.message);
@@ -321,60 +464,58 @@ async function getRepoContent(url, paths) {
 
 
 
-
-//  this fuunction fetch the file structure from the git repositry
-async function getRepoFileStructure(url) {
+// this function fetch the file structure from the git repository
+async function getRepoFileStructure(url, branch, accessToken) {
     try {
-        let Path = [];
-        const Language = await getRepoLanguageList(url)
+        const oK = createOctokit(accessToken);
         const { owner, repo } = parseURL(url);
-        // Step 1: Get the SHA of the latest commit on the branch
-        const refData = await oK.git.getRef({
-            owner,
-            repo,
-            ref: `heads/main`
-        });
 
-        const commitSha = refData.data.object.sha;
+        // Run language detection and tree fetching in parallel
+        const [Language, treeData] = await Promise.all([
+            getRepoLanguageList(url, oK),
+            oK.git.getTree({
+                owner,
+                repo,
+                tree_sha: branch, // branch name works directly
+                recursive: "1"
+            })
+        ]);
 
-        // Step 2: Get the tree SHA from the commit
-        const commitData = await oK.git.getCommit({
-            owner,
-            repo,
-            commit_sha: commitSha
-        });
+        const Path = [];
 
-        const treeSha = commitData.data.tree.sha;
+        // Normalize language only once
+        const normalizedLang = Object.keys(Files).find(
+            key => key.toLowerCase() === Language?.toLowerCase()
+        );
 
-        // Step 3: Get the full recursive tree
-        const treeData = await oK.git.getTree({
-            owner,
-            repo,
-            tree_sha: treeSha,
-            recursive: "1"
-        });
+        if (!normalizedLang) {
+            console.log("No matching language config found");
+            return { Content: "", repo };
+        }
 
-        // Output file paths
-        treeData.data.tree.forEach(item => {
-            if (item.type === 'blob') {
+        const allowedFiles = new Set(Files[normalizedLang]);
+
+        // Filter relevant files
+        for (const item of treeData.data.tree) {
+            if (item.type === "blob") {
                 const base = path.basename(item.path);
-                // Normalize the language key (e.g., "javascript" → "Javascript")
-                const normalizedLang = Object.keys(Files).find(
-                    key => key.toLowerCase() === Language.toLowerCase()
-                );
-                if (normalizedLang && Files[normalizedLang].includes(base)) {
-                    Path.push(item.path)
+
+                if (allowedFiles.has(base)) {
+                    Path.push(item.path);
                 }
             }
-        });
-        console.log(Path)
-        const { Content } = await getRepoContent(url, Path)
+        }
+
+        console.log("Detected files:", Path.length);
+
+        const { Content } = await getRepoContent(url, Path, oK);
+
         return { Content, repo };
+
     } catch (error) {
         console.error("Error fetching file structure:", error.message);
     }
 }
-
 
 // async function run() {
 //     await getRepoFileStructure("https://github.com/Kartikgupta666/AI-based-GITHUB-readme-generator.git");
