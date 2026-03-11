@@ -209,7 +209,7 @@ app.get("/auth/github/callback", async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: false,
-        sameSite: "lax",
+        sameSite: "none",
         maxAge: 3600000
     })
 
